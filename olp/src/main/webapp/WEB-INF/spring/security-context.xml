@@ -8,27 +8,30 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/**" access="ROLE_OLP_ADMIN" />
-		<form-login default-target-url="/home" always-use-default-target="true" />
-		<logout logout-url="/logout"/>
+		<form-login default-target-url="/home"
+			always-use-default-target="true" />
+		<logout logout-url="/logout" />
 	</http>
-	
+
 	<beans:bean id="securityDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<beans:property name="url" value="jdbc:oracle:thin:@wallace.dss.local:1521:DSS"/>
-		<beans:property name="username" value="dss"/>
-		<beans:property name="password" value="orfai"/>
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<beans:property name="url"
+			value="jdbc:oracle:thin:@wallace.dss.local:1521:DSS" />
+		<beans:property name="username" value="dss" />
+		<beans:property name="password" value="orfai" />
 	</beans:bean>
 
 	<authentication-manager>
 		<authentication-provider ref="backOfficeAuthenticationProvider"></authentication-provider>
 	</authentication-manager>
-	
-	<beans:bean id="backOfficeAuthenticationProvider" class="th.go.dss.security.BackOfficeAuthenticationProvider">
+
+	<beans:bean id="backOfficeAuthenticationProvider"
+		class="th.go.dss.security.BackOfficeAuthenticationProvider">
 		<beans:property name="boSecDao" ref="boSecDao"></beans:property>
 	</beans:bean>
-	
+
 	<beans:bean id="boSecDao" class="th.go.dss.security.dao.BackOfficeSecDaoJdbc">
 		<beans:property name="dataSource" ref="securityDataSource"></beans:property>
-	</beans:bean> 
+	</beans:bean>
 
 </beans:beans>

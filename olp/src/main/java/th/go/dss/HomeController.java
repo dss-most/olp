@@ -110,6 +110,15 @@ public class HomeController {
 			list = olpDao.findRegistrationsById(registerIds, activitySearch);
 		}
 		
+		for(Map<String, Object> map : list) {
+			String actitivityCode = (String) map.get("ACTIVITY_CODE");
+			if(actitivityCode.startsWith("QC")) {
+				map.put("IS_QC_ACTIVITY", true);
+			} else {
+				map.put("IS_QC_ACTIVITY", false);
+			}
+		}
+		
 		if(list!= null && list.size() > 0 ) {
 			
 			model.addAttribute("fiscalYear", fiscalYear);
@@ -232,13 +241,12 @@ public class HomeController {
 				list = olpDao.findRegistrationsByFiscalYearAndCustomerCode(fiscalYear, customerCode, activityIdSet);
 			}
 			
-			Boolean isQCActivity = true;
 			for(Map<String, Object> map : list) {
-				String actitivityCode = (String) map.get("activity_code");
+				String actitivityCode = (String) map.get("ACTIVITY_CODE");
 				if(actitivityCode.startsWith("QC")) {
-					isQCActivity = isQCActivity && true;
+					map.put("IS_QC_ACTIVITY", true);
 				} else {
-					isQCActivity = isQCActivity && false;
+					map.put("IS_QC_ACTIVITY", false);
 				}
 			}
 			
@@ -246,7 +254,7 @@ public class HomeController {
 			if(list!= null && list.size() > 0 ) {
 				
 				model.addAttribute("fiscalYear", fiscalYear);
-				model.addAttribute("isQCActivity", isQCActivity);
+				
 				
 				if(chkbx_englishReport!=null && chkbx_englishReport == true) {
 					model.addAttribute("isEnglishAddress", true);

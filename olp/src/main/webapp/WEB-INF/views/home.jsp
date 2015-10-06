@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,17 +11,24 @@
 
 
 
-<script src="<c:url value='/resources/jslib/jquery-1.7.min.js'/>" type="text/javascript"></script>
-<script src="<c:url value='/resources/jslib/extjs-4.0.7/ext-all-debug.js'/>" type="text/javascript"></script>
-<script src="<c:url value='/resources/jslib/twitter-bootstrap-1.4/js/bootstrap-dropdown.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/jslib/jquery-1.7.min.js'/>"
+	type="text/javascript"></script>
+<script
+	src="<c:url value='/resources/jslib/extjs-4.0.7/ext-all-debug.js'/>"
+	type="text/javascript"></script>
+<script
+	src="<c:url value='/resources/jslib/twitter-bootstrap-1.4/js/bootstrap-dropdown.js'/>"
+	type="text/javascript"></script>
 
 
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/jslib/bootstrap-2.0/css/bootstrap.css'/>"/>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/jslib/extjs-4.0.7/resources/css/ext-all.css'/>"  />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/jslib/bootstrap-2.0/css/bootstrap.css'/>" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/jslib/extjs-4.0.7/resources/css/ext-all.css'/>" />
 
 <style type="text/css">
 /* Override some defaults */
-html,body {
+html, body {
 	background-color: #eee;
 }
 
@@ -72,7 +80,7 @@ table th, table td {
 input[type="button"] {
 	width: 13px;
 	height: 13px;
-} 
+}
 
 label {
 	display: inline;
@@ -84,45 +92,43 @@ label {
 <title>ระบบบริหารงานทดสอบความชำนาญ</title>
 </head>
 <body>
- 	
-	<div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="brand" href='<c:url value="/"/>'>ระบบ OLP</a>
 
-          <ul class="nav">
-            <li class="active"><a href='<c:url value="/"/>'>Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-         
-         <div class="pull-right">
-	         <ul class="nav secondary-nav">
-	         	 <li class="dropdown" data-dropdown="dropdown">
-	         	 	<a href="#" class="dropdown-toggle"><sec:authentication property="name" /></a>
-	         	 	
-	         	 	<ul class="dropdown-menu">
-						<li><a href="<c:url value='logout'/>">logout</a></li>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href='<c:url value="/"/>'>ระบบ OLP</a>
+
+				<ul class="nav">
+					<li class="active"><a href='<c:url value="/"/>'>Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+
+				<div class="pull-right">
+					<ul class="nav secondary-nav">
+						<li class="dropdown" data-dropdown="dropdown"><a href="#"
+							class="dropdown-toggle"><sec:authentication property="name" /></a>
+
+							<ul class="dropdown-menu">
+								<li><a href="<c:url value='logout'/>">logout</a></li>
+							</ul></li>
 					</ul>
-	         	 	
-	         	 </li>
-	         </ul>
-         </div>
-         	
-         	
-         
-        </div>
-      </div>
-    </div>
-    
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
 	<div class="container">
 
-      	<div class="content">
-	        <div class="page-header">
-				 <h1>ระบบพิมพ์รายงาน</h1>
+		<div class="content">
+			<div class="page-header">
+				<h1>ระบบพิมพ์รายงาน</h1>
 			</div>
 
-		
+
 			<div class="row">
 				<div class="span14">
 					<ul>
@@ -133,6 +139,6 @@ label {
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>
