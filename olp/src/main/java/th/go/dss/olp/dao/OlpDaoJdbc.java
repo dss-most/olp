@@ -135,7 +135,7 @@ where a.activity_code like 'D01' and r.fiscal_year='2555'
                 "	, decode(p.province_id, 21 , \'เขต\'||d.amphur_name, " +
 				"			\'อำเภอ\'||d.amphur_name ) amphur " +
 				"	, decode(p.province_id, 21 , p.province_name, "+
-				"			\'จังหวัด\'||p.province_name ) province " +
+				"			\'จังหวัด \'||p.province_name ) province " +
 				"	, c.postcode_receipt postcode " +
 				"from " +
 				"	olp_register r inner join olp_applicant ap on r.applicant_id = ap.id " +

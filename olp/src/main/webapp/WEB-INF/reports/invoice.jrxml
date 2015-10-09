@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 4.6.0  -->
-<!-- 2014-10-07T11:08:30 -->
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-10-07T18:37:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="20" isFloatColumnFooter="true" uuid="021470aa-8347-4266-83b3-5fc17dc24f92">
 	<property name="ireport.zoom" value="1.2100000000000224"/>
 	<property name="ireport.x" value="0"/>
@@ -75,6 +75,7 @@ order by ap.id asc, r.register_number asc, pln.id asc, ex.id asc ,a.id asc]]>
 	<field name="COMPANY_EN_RECEIPT" class="java.lang.String"/>
 	<field name="RA_AMOUNT" class="java.math.BigDecimal"/>
 	<field name="EXAM_NUM" class="java.math.BigDecimal"/>
+	<field name="IS_QC_ACTIVITY" class="java.lang.Boolean"/>
 	<variable name="PRICE_1" class="java.lang.Double" resetType="Group" resetGroup="RegisterNumber" calculation="Sum">
 		<variableExpression><![CDATA[$F{RA_AMOUNT}]]></variableExpression>
 	</variable>
@@ -199,11 +200,11 @@ order by ap.id asc, r.register_number asc, pln.id asc, ex.id asc ,a.id asc]]>
 					<text><![CDATA[ค่าธรรมเนียม (บาท)]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="0" y="11" width="555" height="43" uuid="eca72d1b-cbda-4978-880c-5acbfdee7b19"/>
+					<reportElement x="0" y="0" width="555" height="60" uuid="eca72d1b-cbda-4978-880c-5acbfdee7b19"/>
 					<textElement textAlignment="Center" markup="styled">
 						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["ใบแจ้งชำระค่าธรรมเนียมกิจกรรมทดสอบความชำนาญปีงบประมาณ " + $P{fiscalYear} + "<br/>ศูนย์บริหารจัดการทดสอบความชำนาญห้องปฏิบัติการ กรมวิทยาศาสตร์บริการ"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IS_QC_ACTIVITY} ? "ใบแจ้งชำระค่าธรรมเนียมการออกใบรายงานตัวอย่างควบคุม QC Sample <br/>ศูนย์บริหารจัดการทดสอบความชำนาญห้องปฏิบัติการ <br/> กรมวิทยาศาสตร์บริการ (http://www.dss.go.th)" : "ใบแจ้งชำระค่าธรรมเนียมกิจกรรมทดสอบความชำนาญปีงบประมาณ " + $P{fiscalYear} + "<br/>ศูนย์บริหารจัดการทดสอบความชำนาญห้องปฏิบัติการ<br/>กรมวิทยาศาสตร์บริการ (http://www.dss.go.th)"]]></textFieldExpression>
 				</textField>
 				<componentElement>
 					<reportElement x="479" y="26" width="75" height="28" uuid="78d776e9-6fdd-4838-9a5f-ef9c3fe82dd2"/>
@@ -226,12 +227,16 @@ order by ap.id asc, r.register_number asc, pln.id asc, ex.id asc ,a.id asc]]>
 					<textFieldExpression><![CDATA[NumToBaht.formatDate($F{END_PAYMENT_DATE})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="479" y="0" width="75" height="26" uuid="4b261184-574a-4fc8-bf2d-65d891422696"/>
+					<reportElement x="478" y="1" width="75" height="26" uuid="4b261184-574a-4fc8-bf2d-65d891422696"/>
 					<textElement textAlignment="Center">
 						<font fontName="TH SarabunPSK" size="16" isBold="true" pdfFontName="TH SarabunPSK" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[บท.]]></text>
 				</staticText>
+				<image>
+					<reportElement x="-5" y="0" width="51" height="50" uuid="f344bf58-6cf5-47cd-817b-47441fff41aa"/>
+					<imageExpression><![CDATA["dss_logo_big.png"]]></imageExpression>
+				</image>
 			</band>
 		</groupHeader>
 		<groupFooter>
