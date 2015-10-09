@@ -112,7 +112,7 @@ public class HomeController {
 		
 		for(Map<String, Object> map : list) {
 			String actitivityCode = (String) map.get("ACTIVITY_CODE");
-			if(actitivityCode.startsWith("QC")) {
+			if(actitivityCode!= null && actitivityCode.startsWith("QC")) {
 				map.put("IS_QC_ACTIVITY", true);
 			} else {
 				map.put("IS_QC_ACTIVITY", false);
@@ -198,7 +198,7 @@ public class HomeController {
 			
 			for(Map<String, Object> map : list) {
 				String actitivityCode = (String) map.get("ACTIVITY_CODE");
-				if(actitivityCode.startsWith("QC")) {
+				if(actitivityCode != null && actitivityCode.startsWith("QC")) {
 					map.put("IS_QC_ACTIVITY", true);
 				} else {
 					map.put("IS_QC_ACTIVITY", false);
@@ -253,7 +253,7 @@ public class HomeController {
 			
 			for(Map<String, Object> map : list) {
 				String actitivityCode = (String) map.get("ACTIVITY_CODE");
-				if(actitivityCode.startsWith("QC")) {
+				if(actitivityCode != null && actitivityCode.startsWith("QC")) {
 					map.put("IS_QC_ACTIVITY", true);
 				} else {
 					map.put("IS_QC_ACTIVITY", false);
