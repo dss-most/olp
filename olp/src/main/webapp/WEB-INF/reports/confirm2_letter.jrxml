@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-10-09T17:19:26 -->
+<!-- 2015-10-20T19:07:18 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="20" isFloatColumnFooter="true" uuid="94a45099-6de6-4314-a5c4-a2c355fb668d">
 	<property name="ireport.zoom" value="1.2100000000000224"/>
 	<property name="ireport.x" value="0"/>
@@ -348,7 +348,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["3. การยืนยันสถานภาพ" + ($F{IS_QC_ACTIVITY}?"":"ของการเข้าร่วมกิจกรรมทดสอบความชำนาญ")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["3. การยืนยันสถานภาพ" + ($F{IS_QC_ACTIVITY}?"ใบรายงานตัวอย่างควบคุม QC Sample":"ของการเข้าร่วมกิจกรรมทดสอบความชำนาญ")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -434,7 +434,7 @@
 					<font fontName="TH SarabunPSK" size="16"/>
 					<paragraph firstLineIndent="0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["กรุณาตรวจสอบรายละเอียดต่างๆ ในแบบยืนยันการเข้าร่วมกิจกรรมทดสอบความชำนาญ และส่งแบบยืนยันนี้ กลับมายังศูนย์ฯ หมายเลขโทรสาร 0 2201 507 หรือ email : clpt@dss.go.th หลังจากส่งแฟกซ์แล้ว กรุณาโทรศัพท์แจ้งยืนยันอีกครั้งที่ หมายเลขโทรศัพท์ 0 2201 7331 - 3 <br/>ใบแจ้งชำระค่าธรรมเนียมจะออกแบบรวมรายการ จำนวน 9 รายการ ต่อ 1 ฉบับ กรณีประสงค์ให้ออกใบแจ้งชำระฯ แยกรายการ กรุณาติดต่อกลับศูนย์ฯ  <br/>" + 
+				<textFieldExpression><![CDATA["กรุณาตรวจสอบรายละเอียดต่างๆ ในแบบยืนยันการเข้าร่วมกิจกรรมทดสอบความชำนาญ และส่งแบบยืนยันนี้ กลับมายังศูนย์ฯ หมายเลขโทรสาร 0 2201 7507 หรือ email : clpt@dss.go.th หลังจากส่งแฟกซ์แล้ว กรุณาโทรศัพท์แจ้งยืนยันอีกครั้งที่ หมายเลขโทรศัพท์ 0 2201 7331 - 3 <br/>ใบแจ้งชำระค่าธรรมเนียมจะออกแบบรวมรายการ จำนวน 9 รายการ ต่อ 1 ฉบับ กรณีประสงค์ให้ออกใบแจ้งชำระฯ แยกรายการ กรุณาติดต่อกลับศูนย์ฯ  <br/>" + 
 (!$F{IS_QC_ACTIVITY}?"ตัวอย่างของแต่ละกิจกรรมจะจัดส่งให้ห้องปฏิบัติการทางไปรษณีย์ด่วนพิเศษ (EMS) กรณีมีการเปลี่ยนแปลงวันที่จัดส่งตัวอย่าง จะแจ้งให้ทราบทันที สำหรับสาขาสอบเทียบ วันที่จัดส่งตัวอย่าง ผู้ประสานงานจะมีหนังสือนัดหมายแจ้งให้ทราบภายหลัง<br/>":"QC Sample จะจัดส่งให้ห้องปฏิบัติการทางไปรษณีย์ลงทะเบียน หลังจากหน่วยงานของท่านได้ชำระค่าธรรมเนียมแล้วภายใน 1 สัปดาห์<br/>")]]></textFieldExpression>
 			</textField>
 			<ellipse>
@@ -470,7 +470,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["4. รายละเอียดข้อมูล" + ($F{IS_QC_ACTIVITY}?"":"ของการเข้าร่วมกิจกรรมทดสอบความชำนาญ")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["4. รายละเอียดข้อมูล" + ($F{IS_QC_ACTIVITY}?"ใบรายงานตัวอย่างควบคุม QC Sample":"ของการเข้าร่วมกิจกรรมทดสอบความชำนาญ")]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
