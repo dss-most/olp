@@ -14,7 +14,11 @@
 <script src="<c:url value='/resources/jslib/jquery-1.7.min.js'/>"
 	type="text/javascript"></script>
 <script
-	src="<c:url value='/resources/jslib/extjs-4.0.7/ext-all-debug.js'/>"
+	src="<c:url value='/resources/jslib/extjs-4.2.1/ext-all-debug.js'/>"
+	type="text/javascript"></script>
+	
+<script
+	src="<c:url value='/resources/jslib/extjs-4.0.7/ext-lang-th.js'/>"
 	type="text/javascript"></script>
 <script
 	src="<c:url value='/resources/jslib/twitter-bootstrap-1.4/js/bootstrap-dropdown.js'/>"
@@ -24,9 +28,9 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/jslib/bootstrap-2.0/css/bootstrap.css'/>" />
 <link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/jslib/extjs-4.0.7/resources/css/ext-all.css'/>" />
+	href="<c:url value='/resources/jslib/extjs-4.2.1/resources/css/ext-all.css'/>" />
 
-<script src="<c:url value='/resources/viewsjs/printInvoice2.js'/>"
+<script src="<c:url value='/resources/viewsjs/printPlan.js'/>"
 	type="text/javascript"></script>
 
 <style type="text/css">
@@ -88,11 +92,15 @@ input[type="button"] {
 label {
 	display: inline;
 }
+
+.x-grid-cell-inner {
+	white-space: normal;
+} 
 </style>
 
 
 
-<title>พิมพ์ใบแจ้งหนี้ชำระค่าธรรมเนียม</title>
+<title>พิมพ์รายชื่อกิจกรรมประจำปี</title>
 </head>
 <body>
 
@@ -128,7 +136,7 @@ label {
 
 		<div class="content">
 			<div class="page-header">
-				<h1>พิมพ์ใบแจ้งหนี้ชำระค่าธรรมเนียม จากหมายเลขลงทะเบียน</h1>
+				<h1>พิมพ์รายชื่อกิจกรรมประจำปี</h1>
 			</div>
 
 

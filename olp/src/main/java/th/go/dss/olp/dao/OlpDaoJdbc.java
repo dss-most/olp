@@ -5,6 +5,8 @@ package th.go.dss.olp.dao;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ public class OlpDaoJdbc implements OlpDao {
 
 	
 	private static final Logger logger = LoggerFactory.getLogger(OlpDaoJdbc.class);
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -34,6 +37,39 @@ public class OlpDaoJdbc implements OlpDao {
 	public void setDataSource(DataSource ds) {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(ds);
 	}
+
+	private RowMapper<Map<String, Object>> genericRowMapperForJS = new RowMapper<Map<String, Object>>() {
+		public Map<String, Object> mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+				Map<String, Object> map = new HashMap <String, Object>();
+				
+				// now get all the column
+				ResultSetMetaData rsmd  = rs.getMetaData();
+				Integer columnCount = rsmd.getColumnCount();
+				for(Integer i=0; i<columnCount;  i++) {
+					//logger.debug("geting columnName: " + rsmd.getColumnName(i+1));
+					//logger.debug("geting value: " + rs.getObject(i+1));
+					
+					Object result;
+					if(rsmd.getColumnType(i+1) == java.sql.Types.DATE || 
+							rsmd.getColumnType(i+1) == java.sql.Types.TIMESTAMP	) {
+						Date date = rs.getDate(i+1);
+						
+						if(date != null) {
+							result = sdf.format(date);
+						} else {
+							result = null;
+						}
+					} else {
+						result = rs.getObject(i+1);
+					}
+					
+					
+					map.put(rsmd.getColumnName(i+1),result);
+				}
+			return map;
+		}
+	};
 	
 	private RowMapper<Map<String, Object>> genericRowMapper = new RowMapper<Map<String, Object>>() {
 		public Map<String, Object> mapRow(ResultSet rs, int rowNum)
@@ -46,11 +82,53 @@ public class OlpDaoJdbc implements OlpDao {
 				for(Integer i=0; i<columnCount;  i++) {
 					//logger.debug("geting columnName: " + rsmd.getColumnName(i+1));
 					//logger.debug("geting value: " + rs.getObject(i+1));
-					map.put(rsmd.getColumnName(i+1),rs.getObject(i+1));
+					
+					Object result;
+					result = rs.getObject(i+1);
+					
+					map.put(rsmd.getColumnName(i+1),result);
 				}
 			return map;
 		}
 	};
+	
+	
+
+	@Override
+	public List<Map<String, Object>> findPlanActivitiesByFiscalYear(String fiscalYear, Boolean formatDate) {
+		String sql1 = "" +
+				"select p.id PLAN_ID, p.PLAN_CODE, p.branch_name, e.id EXAMPLE_ID, e.EXAMPLE_CODE, e.EXAMPLE_NAME, " +
+				"	a.id ACTIVITY_ID, a.ACTIVITY_CODE, " +
+				"	a.ACTIVITY_NAME, a.price, a.ROOM_NUMBER, a.CLOSE_APPLICANT_DATE, a.START_ACTIVITY_DATE, " +
+				"   a.ROUND, emp.EMP_NAME, a.BARCODE " +
+				"from OLP_EXAMPLE e, olp_plan p, OLP_ACTIVITY a, HR_EMPLOYEE emp " +
+				"where e.OLP_PLAN_ID = p.id " +
+				"	and a.olp_example_id = e.ID" +
+				" 	and a.emp_emp_id = emp.emp_id(+) " +
+				"  	and p.FISCAL_YEAR=:fiscalYear " +
+				"order by p.id asc, e.id asc, a.id asc";
+				
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("fiscalYear", fiscalYear);
+		
+		List<Map<String, Object>> returnList;
+		if(formatDate)
+		
+			 returnList = this.jdbcTemplate.query(
+					sql1,
+					params,
+					genericRowMapperForJS
+					);
+		else {
+			returnList = this.jdbcTemplate.query(
+					sql1,
+					params,
+					genericRowMapper
+					);
+		}
+		
+		return returnList;
+	}
 
 	@Override
 	public List<Map<String, Object>> findActivitiesByFiscalYear(
@@ -125,7 +203,7 @@ where a.activity_code like 'D01' and r.fiscal_year='2555'
 				"	, pln.branch_name " +
 				"	, a.activity_name " +
 				"	, ra.exam_num "	+ 
-				"	, ra.amount " +
+				"	, ra.amount ra_amount" +
 				"	, a.price " +
 				"	, c.company_th_receipt" +
 				"	, c.add_receipt " +
@@ -135,7 +213,7 @@ where a.activity_code like 'D01' and r.fiscal_year='2555'
                 "	, decode(p.province_id, 21 , \'เขต\'||d.amphur_name, " +
 				"			\'อำเภอ\'||d.amphur_name ) amphur " +
 				"	, decode(p.province_id, 21 , p.province_name, "+
-				"			\'จังหวัด \'||p.province_name ) province " +
+				"			\'จังหวัด\'||p.province_name ) province " +
 				"	, c.postcode_receipt postcode " +
 				"from " +
 				"	olp_register r inner join olp_applicant ap on r.applicant_id = ap.id " +
@@ -237,6 +315,7 @@ where a.activity_code like 'D01' and r.fiscal_year='2555'
 				"	, ap.customer_name_candidate " +
 				"	, a.activity_code " +
 				"	, a.start_activity_date " +
+				" 	, a.round " +
 				"	, nvl(ap.tel_no, \' \') tel_no " +
 				"	, nvl(ap.fax_no, \' \') fax_no " +
 				"	, ap.email " +
@@ -450,6 +529,7 @@ order by act.activity_code;
 				"	, ap.customer_code " +
 				"	, ap.customer_name_candidate " +
 				"	, a.activity_code " +
+				" 	, a.round " +
 				"	, upper(substr(a.activity_code,1,2)) code2Letter" +
 				"	, a.start_activity_date " +
 				"	, nvl(ap.tel_no, \' \') tel_no " +

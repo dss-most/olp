@@ -3,6 +3,7 @@ package th.go.dss;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -14,6 +15,7 @@ import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 
+import net.sf.jasperreports.engine.JRRewindableDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.go.dss.olp.dao.OlpDao;
+import th.go.dss.view.ThJasperReportsPdfView;
 
 /**
  * Handles requests for the application home page.
@@ -33,6 +40,9 @@ public class HomeController {
 	@Autowired
 	private OlpDao olpDao; 
 	
+	@Autowired 
+	private ApplicationContext appContext;
+	
 	public OlpDao getOlpDao() {
 		return olpDao;
 	}
@@ -42,6 +52,14 @@ public class HomeController {
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value="/json/listPlanActivity")
+	public @ResponseBody List<Map<String, Object>> listPlanActivity(
+			@RequestParam String fiscalYear
+			) {
+		return olpDao.findPlanActivitiesByFiscalYear(fiscalYear,true);
+		
+	}
 	
 	@RequestMapping(value="/json/listActivity")
 	public @ResponseBody List<Map<String, Object>> listActivity(
@@ -82,6 +100,52 @@ public class HomeController {
 	}
 	
 	
+
+	
+	@RequestMapping(value="/reportPlanActivity")
+	public ModelAndView reportPlanActivity(
+			@RequestParam(required=true) String fiscalYear,
+			@RequestParam(required=true) String reportPage
+			) {
+		
+		List<Map<String, Object>> list = null;
+		ModelAndView viewReturn = null;
+		final Map<String, Object> model = new HashMap<>();
+		
+		if(reportPage.equals("excelReport")) {
+			model.put("fiscalYear", fiscalYear);
+			list = olpDao.findPlanActivitiesByFiscalYear(fiscalYear,true);
+			
+			model.put("planActivityList", list);
+			
+			viewReturn = new ModelAndView("planActivityExcelExport", model);
+			
+			
+		} else if(reportPage.equals("pdfReport")) {
+//			final JasperReportsPdfView view = new ThJasperReportsPdfView();
+			
+			model.put("fiscalYear", fiscalYear);
+			
+			HashMap<String, Object> line = new HashMap<String,Object>();
+			line.put("fiscalYear", fiscalYear);
+			list = new ArrayList<>();
+			list.add(line);
+			
+			model.put("datasource",list);
+			
+			List<Map<String, Object>> list2 = null;
+			list2 = olpDao.findPlanActivitiesByFiscalYear(fiscalYear,false);
+			JRRewindableDataSource activityList = new JRBeanCollectionDataSource(list2);
+			
+		    model.put("activityList", activityList);
+		    
+			viewReturn = new ModelAndView("planActivityPdf", model);
+		}
+		
+		logger.debug("returning view: " + viewReturn);
+		
+		return viewReturn;
+	}
 	
 	@RequestMapping(value="/pdfReportByRegisterIds")
 	public String pdfInvoiceByRegisterNumber(
@@ -112,10 +176,14 @@ public class HomeController {
 		
 		for(Map<String, Object> map : list) {
 			String actitivityCode = (String) map.get("ACTIVITY_CODE");
-			if(actitivityCode!= null && actitivityCode.startsWith("QC")) {
-				map.put("IS_QC_ACTIVITY", true);
-			} else {
-				map.put("IS_QC_ACTIVITY", false);
+			
+			if(actitivityCode != null ) {
+			
+				if(actitivityCode.startsWith("QC")) {
+					map.put("IS_QC_ACTIVITY", true);
+				} else {
+					map.put("IS_QC_ACTIVITY", false);
+				}
 			}
 		}
 		
@@ -144,6 +212,14 @@ public class HomeController {
 	public String home(Model model) {		
 		
 		return "home";
+	}
+	
+
+	@RequestMapping(value="/printPlan")
+	public String printPlan(Model model) {
+		
+		
+		return "printPlan";
 	}
 	
 	@RequestMapping(value="/printInvoice2")
@@ -196,16 +272,6 @@ public class HomeController {
 			}
 			
 			
-			for(Map<String, Object> map : list) {
-				String actitivityCode = (String) map.get("ACTIVITY_CODE");
-				if(actitivityCode != null && actitivityCode.startsWith("QC")) {
-					map.put("IS_QC_ACTIVITY", true);
-				} else {
-					map.put("IS_QC_ACTIVITY", false);
-				}
-			}
-			
-			
 			if(list!= null && list.size() > 0 ) {
 				
 				model.addAttribute("fiscalYear", fiscalYear);
@@ -253,7 +319,7 @@ public class HomeController {
 			
 			for(Map<String, Object> map : list) {
 				String actitivityCode = (String) map.get("ACTIVITY_CODE");
-				if(actitivityCode != null && actitivityCode.startsWith("QC")) {
+				if(actitivityCode.startsWith("QC")) {
 					map.put("IS_QC_ACTIVITY", true);
 				} else {
 					map.put("IS_QC_ACTIVITY", false);
