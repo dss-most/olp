@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/resources=UTF-8
 encoding//src/main/webapp/WEB-INF/reports/confirm2_letter.jrxml=UTF-8
+encoding//src/main/webapp/WEB-INF/reports/confirm_letter.jrxml=UTF-8
+encoding//src/main/webapp/WEB-INF/reports/invoice.jrxml=UTF-8
+encoding//src/main/webapp/WEB-INF/spring=UTF-8
 encoding//src/test/resources=UTF-8
