@@ -3,7 +3,6 @@
 	<name>olp</name>
 	<comment></comment>
 	<projects>
-		<project>Servers</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -38,6 +37,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>net.sf.jasperreports.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
